@@ -1,3 +1,6 @@
+//time o(n^2)
+//space o(n^2)
+
 class Solution {
     public int[][] imageSmoother(int[][] M) {
     	int row = M.length;
@@ -99,4 +102,42 @@ class Solution {
     	}
      return result; 
     }
+}
+
+//time o(n^2)
+//space o(n^2)
+//learn from discuss
+class Solution {
+    public int[][] imageSmoother(int[][] M) {
+    	if(M == null) return null;
+
+    	int row = M.length;
+    	int col = M[0].length;
+    	int sum = 0;
+    	int num = 0;
+    	int[][] result = new int[row][col];
+
+    	for(int i = 0 ; i < row ; i++){
+    		for(int j = 0 ; j < col ; j++){
+    			for(int incRow:new int[]{-1,0,1}){
+    				for(int incCol:new int[]{-1,0,1}){
+    					if(judgeBoundary(i,j,row,col,incRow,incCol)){
+    						sum += M[i+incRow][j+incCol];
+    						num++;
+    					}
+    				}
+    			}
+    			result[i][j] = sum / num;
+    			sum = 0;
+    			num = 0;
+    		}
+    	}
+    	return result;
+    }
+
+	public boolean judgeBoundary(int i,int j,int row,int col,int incRow,int incCol) {
+    	if(i + incRow >= 0 && i + incRow < row && j + incCol >= 0 && j + incCol < col) return true;
+    	else return false;
+    }
+
 }
